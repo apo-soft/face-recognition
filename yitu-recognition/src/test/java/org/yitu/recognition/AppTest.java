@@ -1,38 +1,39 @@
 package org.yitu.recognition;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import org.yitu.recognition.util.Base64Util;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
-    }
+public class AppTest {
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
+	private void fileInputTest(String imgFile) {
+		try {
+			FileInputStream file = new FileInputStream(imgFile);
+			String output = Base64Util.getImgBase64Str(file);
+			System.out.println(output);
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
-    }
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void filePath(String imgFile) {
+
+		String result = Base64Util.getImgBase64Str(imgFile);
+		System.out.println(result);
+	}
+
+	public static void main(String[] args) {
+		AppTest app = new AppTest();
+		String imgFile = "/Users/yujinshui/Desktop/info.png";
+		// app.filePath(imgFile);
+		app.fileInputTest(imgFile);
+
+	}
+
 }
