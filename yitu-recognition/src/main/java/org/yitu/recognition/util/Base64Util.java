@@ -35,7 +35,7 @@ public class Base64Util {
 		}
 		BASE64Encoder encoder = new BASE64Encoder();
 
-		return encoder.encode(data);
+		return encoder.encode(data).replaceAll("\r|\n", "");
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class Base64Util {
 			e.printStackTrace();
 		}
 		BASE64Encoder encoder = new BASE64Encoder();
-		return encoder.encode(data);
+		return encoder.encode(data).replaceAll("\r|\n", "");
 	}
 
 }
