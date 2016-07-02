@@ -10,26 +10,26 @@ import org.yitu.recognition.util.YituConfig;
 import org.yitu.recognition.util.YituPropertiesConfig;
 import org.yitu.recognition.vo.FaceFeatureRequest;
 import org.yitu.recognition.vo.FaceFeatureResponse;
-
-import com.alibaba.fastjson.JSON;
+import org.yitu.recognition.vo.FaceQueryRequest;
+import org.yitu.recognition.vo.FaceQueryResponse;
 
 /**
  * Unit test for simple App.
  */
 public class AppTest {
 	static String fileName = "/company/properties/face.properties";
-	static YituPropertiesConfig config = new YituPropertiesConfig(fileName, "utf-8");
+	static YituConfig config = new YituPropertiesConfig(fileName, "utf-8");
 
-	private void test(YituConfig config) throws FileNotFoundException {
-
+	/** 特征抽取 */
+	private void checkFace(YituConfig config) throws FileNotFoundException {
 		FaceFeatureRequest json = getContent();
-		HttpClientUtil client = new HttpClientRequest();
-		FaceFeatureResponse output = client.execute(json, config);
+		HttpClientUtil client = new HttpClientRequest(config);
+		FaceFeatureResponse output = client.execute(json);
 		System.out.println(output.toString());
 
 	}
 
-	FaceFeatureRequest getContent() {
+	private FaceFeatureRequest getContent() {
 		FileInputStream file = null;
 		try {
 			file = new FileInputStream("/Users/yujinshui/Desktop/img/net.jpg");
@@ -50,14 +50,41 @@ public class AppTest {
 		return face;
 	}
 
+	/** 人脸验证 */
+	private void verifyFace(YituConfig config) {
+		FaceQueryRequest request = getQueryRequest();
+		HttpClientUtil client = new HttpClientRequest(config);
+		FaceQueryResponse response = client.compareExecute(request);
+		System.out.println(response);
+	}
+
+	private FaceQueryRequest getQueryRequest() {
+		// TODO
+		return setQueryValues();
+	}
+
+	private FaceQueryRequest setQueryValues() {
+		FaceQueryRequest request = new FaceQueryRequest();
+		request.setDatabase_image_content("");
+		request.setDatabase_image_type(2);
+		request.setQuery_image_type(1);
+		request.setTrue_negative_rate("99.9");
+		
+		request.setQuery_image_package("pack");
+		request.setEnable_verify_detail(true);
+		// TODO
+		return request;
+	}
+
 	public static void main(String[] args) {
 		AppTest app = new AppTest();
 
-		try {
-			app.test(config);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			app.checkFace(config);
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+		app.verifyFace(config);
 
 	}
 

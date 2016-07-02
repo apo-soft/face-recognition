@@ -19,7 +19,7 @@ public class YituPropertiesConfig implements YituConfig {
 	private String LOCAL_URL;
 	private String YITU_PAIR_URL;
 	private String LOCAL_PAIR_URL;
-	
+
 	private String ACCESS_ID;// header部分accessID(x-access-id)
 	private String ACCESS_KEY;// header部分key(x-signature)
 
@@ -90,6 +90,8 @@ public class YituPropertiesConfig implements YituConfig {
 	private void setPropertiesValues(Properties p) {
 		YITU_URL = p.getProperty("YITU_URL");
 		LOCAL_URL = p.getProperty("LOCAL_URL");
+		YITU_PAIR_URL = p.getProperty("YITU_PAIR_URL");
+		LOCAL_PAIR_URL = p.getProperty("LOCAL_PAIR_URL");
 		ACCESS_ID = p.getProperty("ACCESS_ID");
 		ACCESS_KEY = p.getProperty("ACCESS_KEY");
 
@@ -115,14 +117,14 @@ public class YituPropertiesConfig implements YituConfig {
 		return ACCESS_KEY;
 	}
 
-	 
 	@Override
 	public String getYITU_PAIR_URL() {
 		return YITU_PAIR_URL;
 	}
+
 	@Override
 	public String getLOCAL_PAIR_URL() {
 		return LOCAL_PAIR_URL;
 	}
-	
+
 }

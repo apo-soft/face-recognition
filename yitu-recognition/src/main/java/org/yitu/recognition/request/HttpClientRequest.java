@@ -18,31 +18,19 @@ import com.alibaba.fastjson.JSON;
  */
 public class HttpClientRequest implements HttpClientUtil {
 	private static final Logger logger = Logger.getLogger(HttpClientRequest.class);
+	private YituConfig config;
 
-	/**
-	 * @see org.yitu.recognition.request.HttpClientUtil#execute(java.lang.String,
-	 *      org.yitu.recognition.util.YituConfig)
-	 */
-	@Override
-	public FaceFeatureResponse execute(String json, YituConfig config, String url) {
-		FaceFeatureResponse response = null;
-		try {
-			String res = HttpRequestUtil.httpPostWithJSON(json, config, url);
-			response = JSON.parseObject(res, FaceFeatureResponse.class);
-		} catch (Exception e) {
-			logger.error("Get FaceFeatureResponse is wrong.", e);
-		}
-		return response;
+	public HttpClientRequest(YituConfig config) {
+		this.config = config;
 	}
 
 	/**
 	 * 
-	 * @see org.yitu.recognition.request.HttpClientUtil#execute(org.yitu.recognition.vo.FaceFeatureRequest,
-	 *      org.yitu.recognition.util.YituConfig)
+	 * @see org.yitu.recognition.request.HttpClientUtil#execute(org.yitu.recognition.vo.FaceFeatureRequest)
 	 */
 	@Override
-	public FaceFeatureResponse execute(FaceFeatureRequest face, YituConfig config) {
-		return execute(JSON.toJSONString(face), config, config.getLOCAL_URL());
+	public FaceFeatureResponse execute(FaceFeatureRequest face) {
+		return this.execute(JSON.toJSONString(face), config, config.getLOCAL_URL());
 	}
 
 	/**
@@ -51,13 +39,24 @@ public class HttpClientRequest implements HttpClientUtil {
 	 *      org.yitu.recognition.util.YituConfig)
 	 */
 	@Override
-	public FaceQueryResponse compareExecute(FaceQueryRequest face, YituConfig config) {
+	public FaceQueryResponse compareExecute(FaceQueryRequest face) {
 		FaceQueryResponse response = null;
 		try {
 			String res = HttpRequestUtil.httpPostWithJSON(JSON.toJSONString(face), config, config.getYITU_PAIR_URL());
 			response = JSON.parseObject(res, FaceQueryResponse.class);
 		} catch (Exception e) {
-			logger.error("Get FaceQueryResponse is wrong.", e);
+			logger.error("特征对比失败 - Get FaceQueryResponse is wrong.", e);
+		}
+		return response;
+	}
+
+	private FaceFeatureResponse execute(String json, YituConfig config, String url) {
+		FaceFeatureResponse response = null;
+		try {
+			String res = HttpRequestUtil.httpPostWithJSON(json, config, url);
+			response = JSON.parseObject(res, FaceFeatureResponse.class);
+		} catch (Exception e) {
+			logger.error("特征抽取失败 - Get FaceFeatureResponse is wrong.", e);
 		}
 		return response;
 	}
