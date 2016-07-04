@@ -19,9 +19,26 @@ import com.alibaba.fastjson.JSON;
 public class HttpClientRequest implements HttpClientUtil {
 	private static final Logger logger = Logger.getLogger(HttpClientRequest.class);
 	private YituConfig config;
+	private boolean verifyFlag = false;// 特征比对-测试用
+	private boolean featureFlag = false;// 特征抽取-测试用
 
 	public HttpClientRequest(YituConfig config) {
 		this.config = config;
+	}
+
+	/**
+	 * 测试用
+	 * 
+	 * @param config
+	 * @param featureFlag
+	 *            特征抽取【true:公有云，false，私有云。默认false】
+	 * @param verifyFlag
+	 *            特征比对【true：私有云，false：公有云。默认false】
+	 */
+	public HttpClientRequest(YituConfig config, boolean featureFlag, boolean verifyFlag) {
+		this.config = config;
+		this.featureFlag = featureFlag;
+		this.verifyFlag = verifyFlag;
 	}
 
 	/**
@@ -30,7 +47,11 @@ public class HttpClientRequest implements HttpClientUtil {
 	 */
 	@Override
 	public FaceFeatureResponse execute(FaceFeatureRequest face) {
-		return this.execute(JSON.toJSONString(face), config, config.getLOCAL_URL());
+		String url = config.getLOCAL_URL();
+		if (featureFlag) {
+			url = config.getYITU_URL();
+		}
+		return this.execute(JSON.toJSONString(face), config, url);
 	}
 
 	/**
@@ -41,8 +62,14 @@ public class HttpClientRequest implements HttpClientUtil {
 	@Override
 	public FaceQueryResponse compareExecute(FaceQueryRequest face) {
 		FaceQueryResponse response = null;
+		String pair_url = config.getYITU_PAIR_URL();
+		if (verifyFlag) {// 如果true，走本地服务器平台
+			pair_url = config.getLOCAL_PAIR_URL();
+		}
 		try {
-			String res = HttpRequestUtil.httpPostWithJSON(JSON.toJSONString(face), config, config.getYITU_PAIR_URL());
+			String json = JSON.toJSONString(face);
+			System.out.println("verifyRequest:" + json);
+			String res = HttpRequestUtil.httpPostWithJSON(json, config, pair_url);
 			response = JSON.parseObject(res, FaceQueryResponse.class);
 		} catch (Exception e) {
 			logger.error("特征对比失败 - Get FaceQueryResponse is wrong.", e);

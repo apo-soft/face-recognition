@@ -34,7 +34,7 @@ public class HttpRequestUtil {
 	 * @Author yujinshui
 	 * @createTime 2016年7月1日 下午4:25:16
 	 */
-	public static String httpPostWithJSON(String json, YituConfig config,String url) throws Exception {
+	public static String httpPostWithJSON(String json, YituConfig config, String url) throws Exception {
 		// 将JSON进行UTF-8编码,以便传输中文
 		String encoderJson = URLEncoder.encode(json, HTTP.UTF_8);
 

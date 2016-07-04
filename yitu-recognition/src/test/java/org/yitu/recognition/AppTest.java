@@ -19,26 +19,36 @@ import org.yitu.recognition.vo.FaceQueryResponse;
 public class AppTest {
 	static String fileName = "/company/properties/face.properties";
 	static YituConfig config = new YituPropertiesConfig(fileName, "utf-8");
+	HttpClientUtil client = new HttpClientRequest(config, false, false);
 
 	/** 特征抽取 */
-	private void checkFace(YituConfig config) throws FileNotFoundException {
-		FaceFeatureRequest json = getContent();
-		HttpClientUtil client = new HttpClientRequest(config);
+	private FaceFeatureResponse checkFace(YituConfig config) throws FileNotFoundException {
+		String img = "/Users/yujinshui/Desktop/img/card_1.jpg";
+		FaceFeatureRequest json = getContent(img);
+
 		FaceFeatureResponse output = client.execute(json);
 		System.out.println(output.toString());
+		return output;
 
 	}
 
-	private FaceFeatureRequest getContent() {
+	/** 特征抽取-赋值 */
+	private FaceFeatureRequest getContent(String img) {
+		String output = getBase64Img(img);
+		return setPrivateValue(output);
+
+	}
+
+	/** 得到图片的base64加密串 */
+	private String getBase64Img(String img) {
 		FileInputStream file = null;
 		try {
-			file = new FileInputStream("/Users/yujinshui/Desktop/img/net.jpg");
+			file = new FileInputStream(img);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		String output = Base64Util.getImgBase64Str(file);
-		return setPrivateValue(output);
-
+		return output;
 	}
 
 	public FaceFeatureRequest setPrivateValue(String output) {
@@ -51,41 +61,57 @@ public class AppTest {
 	}
 
 	/** 人脸验证 */
-	private void verifyFace(YituConfig config) {
-		FaceQueryRequest request = getQueryRequest();
-		HttpClientUtil client = new HttpClientRequest(config);
+	private FaceQueryResponse verifyFace(YituConfig config, FaceFeatureResponse featureRes) {
+		FaceQueryRequest request = getQueryRequest(featureRes);
 		FaceQueryResponse response = client.compareExecute(request);
-		System.out.println(response);
+		// System.out.println(response);
+		return response;
 	}
 
-	private FaceQueryRequest getQueryRequest() {
-		// TODO
-		return setQueryValues();
+	private FaceQueryRequest getQueryRequest(FaceFeatureResponse featureRes) {
+		return setQueryValues(featureRes);
 	}
 
-	private FaceQueryRequest setQueryValues() {
+	private FaceQueryRequest setQueryValues(FaceFeatureResponse res) {
+
+		String img = getBase64Img("/Users/yujinshui/Desktop/img/id_1.jpg");
+
 		FaceQueryRequest request = new FaceQueryRequest();
-		request.setDatabase_image_content("");
+		request.setDatabase_image_content(img);
+//		request.setDatabase_image_feature(res.getFeature());
 		request.setDatabase_image_type(2);
-		request.setQuery_image_type(1);
-		request.setTrue_negative_rate("99.9");
-		
-		request.setQuery_image_package("pack");
-		request.setEnable_verify_detail(true);
-		// TODO
+		request.setQuery_image_type(3);
+		request.setQuery_image_feature(res.getFeature());
+		request.setTrue_negative_rate("99.999");
+
+		// request.setQuery_image_package("pack");
+		// request.setEnable_verify_detail(true);
 		return request;
+	}
+
+	private void verifyPrint(FaceQueryResponse verify) {
+
+		System.out.println(verify.getPair_verify_result() == 0 ? "同一个人" : "不同人员");
+		System.out.println("相似值：" + verify.getPair_verify_similarity());
+		// System.out.println(verify);
+		// System.out.println(verify);
+		// System.out.println(verify);
+		// System.out.println(verify);
 	}
 
 	public static void main(String[] args) {
 		AppTest app = new AppTest();
-
-//		try {
-//			app.checkFace(config);
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-		app.verifyFace(config);
-
+		FaceFeatureResponse featureRes = null;
+		try {
+			featureRes = app.checkFace(config);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		FaceQueryResponse verify = app.verifyFace(config, featureRes);
+		if (verify.getRtn() == 0)
+			app.verifyPrint(verify);
+		else
+			System.out.println("rtn:" + verify.getRtn() + "  message:" + verify.getMessage());
 	}
 
 }
