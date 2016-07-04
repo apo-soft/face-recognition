@@ -22,8 +22,8 @@ public class AppTest {
 	HttpClientUtil client = new HttpClientRequest(config, false, false);
 
 	/** 特征抽取 */
-	private FaceFeatureResponse checkFace(YituConfig config) throws FileNotFoundException {
-		String img = "/Users/yujinshui/Desktop/img/card_1.jpg";
+	private FaceFeatureResponse checkFace(YituConfig config, String img) throws FileNotFoundException {
+
 		FaceFeatureRequest json = getContent(img);
 
 		FaceFeatureResponse output = client.execute(json);
@@ -57,31 +57,32 @@ public class AppTest {
 		face.setImage_type(2);
 		face.setIdcard_ocr(true);
 		face.setIdcard_ocr_mode(1);
+		face.setMax_faces_allowed(2);
 		return face;
 	}
 
 	/** 人脸验证 */
-	private FaceQueryResponse verifyFace(YituConfig config, FaceFeatureResponse featureRes) {
-		FaceQueryRequest request = getQueryRequest(featureRes);
+	private FaceQueryResponse verifyFace(YituConfig config, FaceFeatureResponse featureRes, String dataImg,
+			String queryImg) {
+		FaceQueryRequest request = getQueryRequest(featureRes, dataImg, queryImg);
 		FaceQueryResponse response = client.compareExecute(request);
 		// System.out.println(response);
 		return response;
 	}
 
-	private FaceQueryRequest getQueryRequest(FaceFeatureResponse featureRes) {
-		return setQueryValues(featureRes);
+	private FaceQueryRequest getQueryRequest(FaceFeatureResponse featureRes, String dataImg, String queryImg) {
+		return setQueryValues(featureRes, dataImg, queryImg);
 	}
 
-	private FaceQueryRequest setQueryValues(FaceFeatureResponse res) {
-
-		String img = getBase64Img("/Users/yujinshui/Desktop/img/id_1.jpg");
-
+	private FaceQueryRequest setQueryValues(FaceFeatureResponse res, String dataImg, String queryImg) {
 		FaceQueryRequest request = new FaceQueryRequest();
-		request.setDatabase_image_content(img);
+		if (dataImg == null)
+			request.setDatabase_image_feature(res.getFeature());
+		else
+			request.setDatabase_image_content(getBase64Img(dataImg));
 		request.setDatabase_image_type(2);
 		request.setQuery_image_type(3);
-		request.setQuery_image_feature(res.getFeature());
-//		request.setQuery_image_content(getBase64Img("/Users/yujinshui/Desktop/img/card_1.jpg"));
+		request.setQuery_image_content(getBase64Img(queryImg));
 		request.setTrue_negative_rate("99.999");
 
 		// request.setQuery_image_package("pack");
@@ -102,12 +103,17 @@ public class AppTest {
 	public static void main(String[] args) {
 		AppTest app = new AppTest();
 		FaceFeatureResponse featureRes = null;
+		String checkimg = "/Users/yujinshui/Desktop/img/dan_1.jpg";// 特征抽取照
+		String dataImg = "/Users/yujinshui/Desktop/img/me_1.jpg";// 已登记照
+		String queryImg = "/Users/yujinshui/Desktop/img/he.jpg";// 待确认照
+
 		try {
-			featureRes = app.checkFace(config);
+			featureRes = app.checkFace(config, checkimg);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		FaceQueryResponse verify = app.verifyFace(config, featureRes);
+
+		FaceQueryResponse verify = app.verifyFace(config, featureRes, null, queryImg);
 		if (verify.getRtn() == 0)
 			app.verifyPrint(verify);
 		else
