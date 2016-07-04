@@ -78,10 +78,10 @@ public class AppTest {
 
 		FaceQueryRequest request = new FaceQueryRequest();
 		request.setDatabase_image_content(img);
-//		request.setDatabase_image_feature(res.getFeature());
 		request.setDatabase_image_type(2);
 		request.setQuery_image_type(3);
 		request.setQuery_image_feature(res.getFeature());
+//		request.setQuery_image_content(getBase64Img("/Users/yujinshui/Desktop/img/card_1.jpg"));
 		request.setTrue_negative_rate("99.999");
 
 		// request.setQuery_image_package("pack");
