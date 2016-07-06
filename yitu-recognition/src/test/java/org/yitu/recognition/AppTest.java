@@ -83,7 +83,7 @@ public class AppTest {
 		request.setDatabase_image_type(2);
 		request.setQuery_image_type(3);
 		request.setQuery_image_content(getBase64Img(queryImg));
-		request.setTrue_negative_rate("99.999");
+		request.setTrue_negative_rate("99.99");
 
 		// request.setQuery_image_package("pack");
 		// request.setEnable_verify_detail(true);
