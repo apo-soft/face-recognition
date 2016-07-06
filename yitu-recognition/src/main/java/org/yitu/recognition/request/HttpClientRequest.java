@@ -16,7 +16,7 @@ import com.alibaba.fastjson.JSON;
  * @author yujinshui
  * @createTime 2016年7月1日 下午4:33:58
  */
-public class HttpClientRequest implements HttpClientUtil {
+public class HttpClientRequest implements HttpClient {
 	private static final Logger logger = Logger.getLogger(HttpClientRequest.class);
 	private YituConfig config;
 	private boolean verifyFlag = false;// 特征比对-测试用
@@ -43,7 +43,7 @@ public class HttpClientRequest implements HttpClientUtil {
 
 	/**
 	 * 
-	 * @see org.yitu.recognition.request.HttpClientUtil#execute(org.yitu.recognition.vo.FaceFeatureRequest)
+	 * @see org.yitu.recognition.request.HttpClient#execute(org.yitu.recognition.vo.FaceFeatureRequest)
 	 */
 	@Override
 	public FaceFeatureResponse execute(FaceFeatureRequest face) {
@@ -56,7 +56,7 @@ public class HttpClientRequest implements HttpClientUtil {
 
 	/**
 	 * 
-	 * @see org.yitu.recognition.request.HttpClientUtil#compareExecute(org.yitu.recognition.vo.FaceQueryRequest,
+	 * @see org.yitu.recognition.request.HttpClient#compareExecute(org.yitu.recognition.vo.FaceQueryRequest,
 	 *      org.yitu.recognition.util.YituConfig)
 	 */
 	@Override

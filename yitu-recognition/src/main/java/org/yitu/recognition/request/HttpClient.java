@@ -5,7 +5,7 @@ import org.yitu.recognition.vo.FaceFeatureResponse;
 import org.yitu.recognition.vo.FaceQueryRequest;
 import org.yitu.recognition.vo.FaceQueryResponse;
 
-public interface HttpClientUtil {
+public interface HttpClient {
 	/**
 	 * 特征比对请求
 	 * 

@@ -4,7 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import org.yitu.recognition.request.HttpClientRequest;
-import org.yitu.recognition.request.HttpClientUtil;
+import org.yitu.recognition.request.HttpClient;
 import org.yitu.recognition.util.Base64Util;
 import org.yitu.recognition.util.YituConfig;
 import org.yitu.recognition.util.YituPropertiesConfig;
@@ -19,7 +19,7 @@ import org.yitu.recognition.vo.FaceQueryResponse;
 public class AppTest {
 	static String fileName = "/company/properties/face.properties";
 	static YituConfig config = new YituPropertiesConfig(fileName, "utf-8");
-	HttpClientUtil client = new HttpClientRequest(config, false, false);
+	HttpClient client = new HttpClientRequest(config, false, false);
 
 	/** 特征抽取 */
 	private FaceFeatureResponse checkFace(YituConfig config, String img) throws FileNotFoundException {
