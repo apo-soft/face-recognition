@@ -19,6 +19,8 @@ public class YituPropertiesConfig implements YituConfig {
 	private String LOCAL_URL;
 	private String YITU_PAIR_URL;
 	private String LOCAL_PAIR_URL;
+	private String YITU_IDCARD_URL;
+	private String YITU_IDCARD_OCR_URL;
 
 	private String ACCESS_ID;// header部分accessID(x-access-id)
 	private String ACCESS_KEY;// header部分key(x-signature)
@@ -127,4 +129,13 @@ public class YituPropertiesConfig implements YituConfig {
 		return LOCAL_PAIR_URL;
 	}
 
+	@Override
+	public String getYITU_IDCARD_URL() {
+		return YITU_IDCARD_URL;
+	}
+
+	@Override
+	public String getYITU_IDCARD_OCR_URL() {
+		return YITU_IDCARD_OCR_URL;
+	}
 }

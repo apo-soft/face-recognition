@@ -58,6 +58,8 @@ public class AppTest {
 		face.setIdcard_ocr(true);
 		face.setIdcard_ocr_mode(1);
 		face.setMax_faces_allowed(2);
+		face.setIdcard_ocr(true);
+		face.setFlip_image(true);
 		return face;
 	}
 
@@ -76,13 +78,14 @@ public class AppTest {
 
 	private FaceQueryRequest setQueryValues(FaceFeatureResponse res, String dataImg, String queryImg) {
 		FaceQueryRequest request = new FaceQueryRequest();
-		if (dataImg == null)
+//		if (dataImg == null)
 			request.setDatabase_image_feature(res.getFeature());
-		else
+//		else
 			request.setDatabase_image_content(getBase64Img(dataImg));
 		request.setDatabase_image_type(2);
 		request.setQuery_image_type(3);
 		request.setQuery_image_content(getBase64Img(queryImg));
+		request.setQuery_image_feature(res.getFeature());
 		request.setTrue_negative_rate("99.99");
 
 		// request.setQuery_image_package("pack");
@@ -103,17 +106,18 @@ public class AppTest {
 	public static void main(String[] args) {
 		AppTest app = new AppTest();
 		FaceFeatureResponse featureRes = null;
-		String checkimg = "/Users/yujinshui/Desktop/img/dan_1.jpg";// 特征抽取照
-		String dataImg = "/Users/yujinshui/Desktop/img/me_1.jpg";// 已登记照
+		String checkimg = "/Users/yujinshui/Desktop/img/he.jpg";// 特征抽取照
+		String dataImg = "/Users/yujinshui/Desktop/img/he.jpg";// 已登记照
 		String queryImg = "/Users/yujinshui/Desktop/img/he.jpg";// 待确认照
-
+		long a = System.currentTimeMillis();
 		try {
 			featureRes = app.checkFace(config, checkimg);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
-		FaceQueryResponse verify = app.verifyFace(config, featureRes, null, queryImg);
+		long b = System.currentTimeMillis();
+		// System.out.println(b - a);
+		FaceQueryResponse verify = app.verifyFace(config, featureRes, dataImg, queryImg);
 		if (verify.getRtn() == 0)
 			app.verifyPrint(verify);
 		else

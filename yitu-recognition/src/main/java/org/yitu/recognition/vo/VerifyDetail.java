@@ -9,7 +9,7 @@ import java.util.Arrays;
  * @createTime 2016年7月2日 下午3:22:13
  */
 public class VerifyDetail {
-	private Integer[] score_list;
+	private Double[] score_list;
 	private QueryFaceRect[] query_face_rect;//
 
 	/**
@@ -19,7 +19,7 @@ public class VerifyDetail {
 	 * @Author yujinshui
 	 * @createTime 2016年7月2日 下午3:21:51
 	 */
-	public Integer[] getScore_list() {
+	public Double[] getScore_list() {
 		return score_list;
 	}
 
@@ -30,7 +30,7 @@ public class VerifyDetail {
 	 * @Author yujinshui
 	 * @createTime 2016年7月2日 下午3:21:57
 	 */
-	public void setScore_list(Integer[] score_list) {
+	public void setScore_list(Double[] score_list) {
 		this.score_list = score_list;
 	}
 

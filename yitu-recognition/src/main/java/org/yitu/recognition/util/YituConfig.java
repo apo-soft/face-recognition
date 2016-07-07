@@ -1,6 +1,12 @@
 package org.yitu.recognition.util;
 
 public interface YituConfig {
+	/** 105.1接口，通用身份证识别URL */
+	String getYITU_IDCARD_OCR_URL();
+
+	/** 100.1接口文档，允许特征码身份证识别URL */
+	String getYITU_IDCARD_URL();
+
 	/** 依图公有云特征抽取URL */
 	String getYITU_URL();
 
