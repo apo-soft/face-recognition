@@ -245,4 +245,12 @@ public class IdcardOcrResult {
 		this.idcard_type = idcard_type;
 	}
 
+	@Override
+	public String toString() {
+		return "IdcardOcrResult [name=" + name + ", address=" + address + ", citizen_id=" + citizen_id
+				+ ", valid_date_begin=" + valid_date_begin + ", valid_date_end=" + valid_date_end + ", gender=" + gender
+				+ ", nation=" + nation + ", birthday=" + birthday + ", agency=" + agency + ", idcard_type="
+				+ idcard_type + "]";
+	}
+
 }

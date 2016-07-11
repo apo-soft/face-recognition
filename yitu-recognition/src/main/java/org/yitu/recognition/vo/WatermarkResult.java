@@ -55,4 +55,10 @@ public class WatermarkResult {
 		this.processed_image_content = processed_image_content;
 	}
 
+	@Override
+	public String toString() {
+		return "WatermarkResult [origin_image_content=" + origin_image_content + ", processed_image_content="
+				+ processed_image_content + "]";
+	}
+
 }

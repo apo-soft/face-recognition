@@ -2,6 +2,7 @@ package org.yitu.recognition;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.UUID;
 
 import org.yitu.recognition.request.HttpClientRequest;
 import org.yitu.recognition.request.HttpClient;
@@ -12,12 +13,16 @@ import org.yitu.recognition.vo.FaceFeatureRequest;
 import org.yitu.recognition.vo.FaceFeatureResponse;
 import org.yitu.recognition.vo.FaceQueryRequest;
 import org.yitu.recognition.vo.FaceQueryResponse;
+import org.yitu.recognition.vo.IdcardRequest;
+import org.yitu.recognition.vo.IdcardResponse;
+import org.yitu.recognition.vo.Options;
+import org.yitu.recognition.vo.UserInfo;
 
 /**
  * Unit test for simple App.
  */
 public class AppTest {
-	static String fileName = "/company/properties/face.properties";
+	static String fileName = "/company/properties/face_yitu.properties";
 	static YituConfig config = new YituPropertiesConfig(fileName, "utf-8");
 	HttpClient client = new HttpClientRequest(config, false, false);
 
@@ -75,13 +80,15 @@ public class AppTest {
 	private FaceQueryRequest setQueryValues(FaceFeatureResponse res, String dataImg, String queryImg) {
 		FaceQueryRequest request = new FaceQueryRequest();
 		// if (dataImg == null)
-		request.setDatabase_image_feature(res.getFeature());
+		if (res != null) {
+			request.setDatabase_image_feature(res.getFeature());
+			request.setQuery_image_feature(res.getFeature());
+		}
 		// else
 		request.setDatabase_image_content(getBase64Img(dataImg));
 		request.setDatabase_image_type(2);
 		request.setQuery_image_type(3);
 		request.setQuery_image_content(getBase64Img(queryImg));
-		request.setQuery_image_feature(res.getFeature());
 		request.setTrue_negative_rate("99.99");
 
 		// request.setQuery_image_package("pack");
@@ -99,28 +106,79 @@ public class AppTest {
 		// System.out.println(verify);
 	}
 
-	public static void main(String[] args) {
-		AppTest app = new AppTest();
+	/**
+	 * 人脸检测与验证
+	 * 
+	 * @param checkimg
+	 * @param dataImg
+	 * @param queryImg
+	 * @Author yujinshui
+	 * @createTime 2016年7月11日 下午10:51:46
+	 */
+	private void checkAndVerify(String checkimg, String dataImg, String queryImg) {
 		FaceFeatureResponse featureRes = null;
-		String checkimg = "/Users/yujinshui/Desktop/img/he.jpg";// 特征抽取照
-		String dataImg = "/Users/yujinshui/Desktop/img/he.jpg";// 已登记照
-		String queryImg = "/Users/yujinshui/Desktop/img/he.jpg";// 待确认照
 		long a = System.currentTimeMillis();
-		try {
-			featureRes = app.checkFace(config, checkimg);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		if (false) {// 判断仅供测试
+			try {
+				featureRes = checkFace(config, checkimg);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
 		long b = System.currentTimeMillis();
 		// System.out.println(b - a);
-		FaceQueryResponse verify = app.verifyFace(config, featureRes, dataImg, queryImg);
-		System.out.println("特征：" + featureRes);
-		System.out.println("验证：" + verify);
+		FaceQueryResponse verify = verifyFace(config, null, dataImg, queryImg);
+		System.out.println("特征返回：" + featureRes);
+		System.out.println("验证结果：" + verify);
 
 		if (verify.getRtn() == 0)
-			app.verifyPrint(verify);
+			verifyPrint(verify);
 		else
 			System.out.println("rtn:" + verify.getRtn() + "  message:" + verify.getMessage());
+	}
+
+	private void idcardOcr(String idPic) {
+
+		IdcardRequest request = getIdRequest(idPic);
+		IdcardResponse response = client.recognizeIdcard(request);
+		System.out.println(response);
+	}
+
+	private IdcardRequest getIdRequest(String idPic) {
+		IdcardRequest request = new IdcardRequest();
+		request.setSession_id(UUID.randomUUID().toString());
+		request.setMode(1);
+		request.setOptions(getOptions());
+		request.setUser_info(getUserInfo(idPic));
+		return request;
+	}
+
+	private Options getOptions() {
+		Options option = new Options();
+		option.setIdcard_ocr(true);
+		option.setIdcard_ocr_mode(3);
+		option.setImage_type(2);
+		return option;
+	}
+
+	private UserInfo getUserInfo(String idPic) {
+		UserInfo user = new UserInfo();
+		user.setImage_content(getBase64Img(idPic));
+
+		return user;
+	}
+
+	public static void main(String[] args) {
+		AppTest app = new AppTest();
+		String checkimg = "/Users/yujinshui/Desktop/img/he.jpg";// 特征抽取照
+		String dataImg = "/Users/yujinshui/Desktop/img/he.jpg";// 已登记照
+		String queryImg = "/Users/yujinshui/Desktop/img/he.jpg";// 待确认照
+
+		String idCard = "/Users/yujinshui/Desktop/img/card_1.jpg";// 身份证正面照片
+		String idCard2 = "/Users/yujinshui/Desktop/img/card_2.jpg";// 身份证反面照片
+
+		// app.checkAndVerify(checkimg, dataImg, queryImg);
+		app.idcardOcr(idCard2);
 	}
 
 }

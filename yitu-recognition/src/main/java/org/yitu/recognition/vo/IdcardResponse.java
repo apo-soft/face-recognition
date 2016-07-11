@@ -101,4 +101,10 @@ public class IdcardResponse {
 		this.watermark_result = watermark_result;
 	}
 
+	@Override
+	public String toString() {
+		return "IdcardResponse [rtn=" + rtn + ", message=" + message + ", idcard_ocr_result=" + idcard_ocr_result
+				+ ", watermark_result=" + watermark_result + "]";
+	}
+
 }

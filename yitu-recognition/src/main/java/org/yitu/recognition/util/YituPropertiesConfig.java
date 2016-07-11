@@ -94,6 +94,8 @@ public class YituPropertiesConfig implements YituConfig {
 		LOCAL_URL = p.getProperty("LOCAL_URL");
 		YITU_PAIR_URL = p.getProperty("YITU_PAIR_URL");
 		LOCAL_PAIR_URL = p.getProperty("LOCAL_PAIR_URL");
+		YITU_IDCARD_URL = p.getProperty("YITU_IDCARD_URL");
+		YITU_IDCARD_OCR_URL = p.getProperty("YITU_IDCARD_OCR_URL");
 		ACCESS_ID = p.getProperty("ACCESS_ID");
 		ACCESS_KEY = p.getProperty("ACCESS_KEY");
 
