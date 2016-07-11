@@ -2,10 +2,13 @@ package org.yitu.recognition.util;
 
 import java.net.URLEncoder;
 import org.apache.http.HttpEntity;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
@@ -38,7 +41,7 @@ public class HttpRequestUtil {
 		// 将JSON进行UTF-8编码,以便传输中文
 		String encoderJson = URLEncoder.encode(json, HTTP.UTF_8);
 
-		DefaultHttpClient httpClient = new DefaultHttpClient();
+		CloseableHttpClient httpClient = HttpClients.createDefault();;
 		HttpPost httpPost = new HttpPost(url);
 		httpPost.addHeader(HTTP.CONTENT_TYPE, APPLICATION_JSON);
 		httpPost.addHeader("x-access-id", config.getACCESS_ID());

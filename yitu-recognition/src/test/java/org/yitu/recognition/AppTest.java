@@ -23,11 +23,8 @@ public class AppTest {
 
 	/** 特征抽取 */
 	private FaceFeatureResponse checkFace(YituConfig config, String img) throws FileNotFoundException {
-
 		FaceFeatureRequest json = getContent(img);
-
 		FaceFeatureResponse output = client.execute(json);
-		System.out.println(output.toString());
 		return output;
 
 	}
@@ -68,7 +65,6 @@ public class AppTest {
 			String queryImg) {
 		FaceQueryRequest request = getQueryRequest(featureRes, dataImg, queryImg);
 		FaceQueryResponse response = client.compareExecute(request);
-		// System.out.println(response);
 		return response;
 	}
 
@@ -78,10 +74,10 @@ public class AppTest {
 
 	private FaceQueryRequest setQueryValues(FaceFeatureResponse res, String dataImg, String queryImg) {
 		FaceQueryRequest request = new FaceQueryRequest();
-//		if (dataImg == null)
-			request.setDatabase_image_feature(res.getFeature());
-//		else
-			request.setDatabase_image_content(getBase64Img(dataImg));
+		// if (dataImg == null)
+		request.setDatabase_image_feature(res.getFeature());
+		// else
+		request.setDatabase_image_content(getBase64Img(dataImg));
 		request.setDatabase_image_type(2);
 		request.setQuery_image_type(3);
 		request.setQuery_image_content(getBase64Img(queryImg));
@@ -118,6 +114,9 @@ public class AppTest {
 		long b = System.currentTimeMillis();
 		// System.out.println(b - a);
 		FaceQueryResponse verify = app.verifyFace(config, featureRes, dataImg, queryImg);
+		System.out.println("特征：" + featureRes);
+		System.out.println("验证：" + verify);
+
 		if (verify.getRtn() == 0)
 			app.verifyPrint(verify);
 		else

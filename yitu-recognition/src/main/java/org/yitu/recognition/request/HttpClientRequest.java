@@ -7,6 +7,8 @@ import org.yitu.recognition.vo.FaceFeatureRequest;
 import org.yitu.recognition.vo.FaceFeatureResponse;
 import org.yitu.recognition.vo.FaceQueryRequest;
 import org.yitu.recognition.vo.FaceQueryResponse;
+import org.yitu.recognition.vo.IdcardRequest;
+import org.yitu.recognition.vo.IdcardResponse;
 
 import com.alibaba.fastjson.JSON;
 
@@ -51,7 +53,13 @@ public class HttpClientRequest implements HttpClient {
 		if (featureFlag) {
 			url = config.getYITU_URL();
 		}
-		return this.execute(JSON.toJSONString(face), config, url);
+		FaceFeatureResponse response = null;
+		try {
+			response = this.execute(JSON.toJSONString(face), config, url, FaceFeatureResponse.class);
+		} catch (Exception e) {
+			logger.error("特征抽取失败 - Get FaceFeatureResponse is wrong.", e);
+		}
+		return response;
 	}
 
 	/**
@@ -67,23 +75,50 @@ public class HttpClientRequest implements HttpClient {
 			pair_url = config.getLOCAL_PAIR_URL();
 		}
 		try {
-			String json = JSON.toJSONString(face);
-			System.out.println("verifyRequest:" + json);
-			String res = HttpRequestUtil.httpPostWithJSON(json, config, pair_url);
-			response = JSON.parseObject(res, FaceQueryResponse.class);
+			response = execute(JSON.toJSONString(face), config, pair_url, FaceQueryResponse.class);
 		} catch (Exception e) {
 			logger.error("特征对比失败 - Get FaceQueryResponse is wrong.", e);
 		}
+
+		return response;
+
+	}
+
+	/**
+	 * 统一调用封装
+	 * 
+	 * @param json
+	 *            json实体
+	 * @param config
+	 *            配置信息
+	 * @param url
+	 *            请求URL
+	 * @param clazz
+	 *            返回数据bean
+	 * @return
+	 * @throws Exception
+	 * @Author yujinshui
+	 * @createTime 2016年7月11日 下午10:28:35
+	 */
+	private <T> T execute(String json, YituConfig config, String url, Class<T> clazz) throws Exception {
+		T response = null;
+		String res = HttpRequestUtil.httpPostWithJSON(json, config, url);
+		response = JSON.parseObject(res, clazz);
 		return response;
 	}
 
-	private FaceFeatureResponse execute(String json, YituConfig config, String url) {
-		FaceFeatureResponse response = null;
+	/**
+	 * 
+	 * @see org.yitu.recognition.request.HttpClient#recognizeIdcard(org.yitu.recognition.vo.IdcardRequest)
+	 */
+	@Override
+	public IdcardResponse recognizeIdcard(IdcardRequest idCard) {
+		IdcardResponse response = null;
 		try {
-			String res = HttpRequestUtil.httpPostWithJSON(json, config, url);
-			response = JSON.parseObject(res, FaceFeatureResponse.class);
+			response = this.execute(JSON.toJSONString(idCard), config, config.getYITU_IDCARD_URL(),
+					IdcardResponse.class);
 		} catch (Exception e) {
-			logger.error("特征抽取失败 - Get FaceFeatureResponse is wrong.", e);
+			logger.error("100.1接口身份证识别异常 - Get IdcardResponse is wrong.", e);
 		}
 		return response;
 	}
