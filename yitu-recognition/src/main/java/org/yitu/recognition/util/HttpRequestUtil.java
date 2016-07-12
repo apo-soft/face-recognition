@@ -14,7 +14,7 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
-@SuppressWarnings({ "unused", "deprecation", "resource" })
+@SuppressWarnings({ "unused", "deprecation" })
 public class HttpRequestUtil {
 	private static final Logger logger = Logger.getLogger(HttpRequestUtil.class);
 
@@ -41,7 +41,8 @@ public class HttpRequestUtil {
 		// 将JSON进行UTF-8编码,以便传输中文
 		String encoderJson = URLEncoder.encode(json, HTTP.UTF_8);
 
-		CloseableHttpClient httpClient = HttpClients.createDefault();;
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+		;
 		HttpPost httpPost = new HttpPost(url);
 		httpPost.addHeader(HTTP.CONTENT_TYPE, APPLICATION_JSON);
 		httpPost.addHeader("x-access-id", config.getACCESS_ID());
