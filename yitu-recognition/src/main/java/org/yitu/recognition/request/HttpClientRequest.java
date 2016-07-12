@@ -49,11 +49,13 @@ public class HttpClientRequest implements HttpClient {
 	 */
 	@Override
 	public FaceFeatureResponse execute(FaceFeatureRequest face) {
+		checkConfig(config);
 		String url = config.getLOCAL_URL();
 		if (featureFlag) {
 			url = config.getYITU_URL();
 		}
 		FaceFeatureResponse response = null;
+
 		try {
 			response = this.execute(JSON.toJSONString(face), config, url, FaceFeatureResponse.class);
 		} catch (Exception e) {
@@ -69,6 +71,7 @@ public class HttpClientRequest implements HttpClient {
 	 */
 	@Override
 	public FaceQueryResponse compareExecute(FaceQueryRequest face) {
+		checkConfig(config);
 		FaceQueryResponse response = null;
 		String pair_url = config.getYITU_PAIR_URL();
 		if (verifyFlag) {// 如果true，走本地服务器平台
@@ -113,6 +116,7 @@ public class HttpClientRequest implements HttpClient {
 	 */
 	@Override
 	public IdcardResponse recognizeIdcard(IdcardRequest idCard) {
+		checkConfig(config);
 		IdcardResponse response = null;
 		try {
 			response = this.execute(JSON.toJSONString(idCard), config, config.getYITU_IDCARD_URL(),
@@ -121,6 +125,26 @@ public class HttpClientRequest implements HttpClient {
 			logger.error("100.1接口身份证识别异常 - Get IdcardResponse is wrong.", e);
 		}
 		return response;
+	}
+
+	/**
+	 * 配置信息验证接口
+	 * 
+	 * @param config
+	 * @Author yujinshui
+	 * @createTime 2016年7月12日 上午11:34:06
+	 */
+	private final void checkConfig(YituConfig config) {
+		if (config == null) {
+			throw new IllegalArgumentException("配置信息不能为NULL");
+		}
+		if (config.getACCESS_ID() == null || config.getACCESS_ID().isEmpty()) {
+			throw new IllegalArgumentException("ID配置信息不能为空");
+
+		}
+		if (config.getACCESS_KEY() == null || config.getACCESS_KEY().isEmpty()) {
+			throw new IllegalArgumentException("ACCESS_KEY配置信息不能为空");
+		}
 	}
 
 }

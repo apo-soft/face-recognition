@@ -25,6 +25,10 @@ public class YituPropertiesConfig implements YituConfig {
 	private String ACCESS_ID;// header部分accessID(x-access-id)
 	private String ACCESS_KEY;// header部分key(x-signature)
 
+	public YituPropertiesConfig() {
+		getProperties("face_yitu.properties");
+	}
+
 	public YituPropertiesConfig(String fileName) {
 		getProperties(fileName);
 	}
