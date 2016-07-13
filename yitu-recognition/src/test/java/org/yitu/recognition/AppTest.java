@@ -131,10 +131,12 @@ public class AppTest {
 
 		IdcardRequest request = getIdRequest(idPic);
 		IdcardResponse response = client.recognizeIdcard(request);
-		String imgStr = response.getWatermark_result().getProcessed_image_content();
-		/// Users/yujinshui/Desktop
-		String result = Base64Util.getBase64ToImg(imgStr, "/Users/yujinshui/Desktop/");
-		System.out.println("图片路径：" + result);
+		// String imgStr =
+		// response.getWatermark_result().getProcessed_image_content();
+		// /// Users/yujinshui/Desktop
+		// String result = Base64Util.getBase64ToImg(imgStr,
+		// "/Users/yujinshui/Desktop/");
+		// System.out.println("图片路径：" + result);
 		System.out.println(response);
 	}
 
@@ -173,7 +175,8 @@ public class AppTest {
 		String dataImg = "/Users/yujinshui/Desktop/img/he.jpg";// 已登记照
 		String queryImg = "/Users/yujinshui/Desktop/img/he.jpg";// 待确认照
 
-		String idCard = "/Users/yujinshui/Desktop/img/card_1.jpg";// 身份证正面照片
+		// String idCard = "/Users/yujinshui/Desktop/img/card_1.jpg";// 身份证正面照片
+		String idCard = "/Users/yujinshui/Downloads/11.jpg";// 身份证正面照片
 		String idCard2 = "/Users/yujinshui/Desktop/img/card_2.jpg";// 身份证反面照片
 
 		// app.checkAndVerify(checkImg, dataImg, queryImg);

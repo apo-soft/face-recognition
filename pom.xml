@@ -7,5 +7,6 @@
   <packaging>pom</packaging>
   <modules>
     <module>yitu-recognition</module>
+    <module>faceID-recognition</module>
   </modules>
 </project>
