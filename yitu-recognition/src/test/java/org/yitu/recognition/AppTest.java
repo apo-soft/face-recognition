@@ -105,12 +105,12 @@ public class AppTest {
 	public void checkAndVerify(String checkimg, String dataImg, String queryImg) {
 		FaceFeatureResponse featureRes = null;
 		long a = System.currentTimeMillis();
-		if (false) {// 判断仅供测试
+		if (true) {// 判断仅供测试
 			featureRes = checkFace(config, checkimg);
 		}
 		long b = System.currentTimeMillis();
 		// System.out.println(b - a);
-		FaceQueryResponse verify = verifyFace(config, null, dataImg, queryImg);
+		FaceQueryResponse verify = verifyFace(config, featureRes, dataImg, queryImg);
 		System.out.println("特征返回：" + featureRes);
 		System.out.println("验证结果：" + verify);
 
@@ -175,12 +175,12 @@ public class AppTest {
 		String dataImg = "/Users/yujinshui/Desktop/img/he.jpg";// 已登记照
 		String queryImg = "/Users/yujinshui/Desktop/img/he.jpg";// 待确认照
 
-		// String idCard = "/Users/yujinshui/Desktop/img/card_1.jpg";// 身份证正面照片
-		String idCard = "/Users/yujinshui/Downloads/11.jpg";// 身份证正面照片
+		String idCard = "/Users/yujinshui/Desktop/img/card_1.jpg";// 身份证正面照片
+		// String idCard = "/Users/yujinshui/Downloads/11.jpg";//
 		String idCard2 = "/Users/yujinshui/Desktop/img/card_2.jpg";// 身份证反面照片
 
-		// app.checkAndVerify(checkImg, dataImg, queryImg);
-		app.idcardOcr(idCard);
+		app.checkAndVerify(checkImg, dataImg, queryImg);
+		// app.idcardOcr(idCard);
 	}
 
 }
