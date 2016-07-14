@@ -35,7 +35,7 @@ public class FaceHttpClientUtil {
 	 * @createTime 2016年7月12日 下午5:35:10
 	 */
 	public static DetectResponse doPost(DetectRequest detect, FaceConfig config) throws IOException {
-		return postDetect(detect, config);
+		return postDetectRequest(detect, config);
 	}
 
 	/**
@@ -69,32 +69,4 @@ public class FaceHttpClientUtil {
 		return detectRes;
 	}
 
-	/**
-	 * 检测接口
-	 * 
-	 * @param detect
-	 *            请求信息
-	 * @param config
-	 *            配置信息
-	 * @return
-	 * @throws IOException
-	 * @Author yujinshui
-	 * @createTime 2016年7月13日 下午2:57:08
-	 */
-	private static DetectResponse postDetect(DetectRequest detect, FaceConfig config) throws IOException {
-		HttpClient httpClient = null;
-		HttpPost httppost = new HttpPost(config.getDETECT_URL());
-		httpClient = HttpClients.createDefault();
-		MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-		builder.addTextBody("api_key", config.getAPI_KEY());
-		builder.addTextBody("api_secret", config.getAPI_SECRET());
-		builder.addBinaryBody("image", detect.getImage());
-		httppost.setEntity(builder.build());
-		HttpResponse response = httpClient.execute(httppost);
-		HttpEntity entity = response.getEntity();
-		String res = EntityUtils.toString(entity);
-		DetectResponse detectRes = JSON.parseObject(res, DetectResponse.class);
-
-		return detectRes;
-	}
 }
