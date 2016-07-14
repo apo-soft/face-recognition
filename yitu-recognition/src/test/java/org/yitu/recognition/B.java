@@ -7,7 +7,7 @@ public class B extends A {
 	System.out.println("b");
 }
 public static void main(String[] args) {
-//	B b =new B();
-	new B(9);
+	B b =new B(0);
+//	new B(9);
 }
 }

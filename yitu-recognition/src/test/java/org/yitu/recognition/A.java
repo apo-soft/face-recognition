@@ -5,10 +5,10 @@ public class A {
 		System.out.println("A");
 	}
 	{
-		System.out.println("kuai");
+		System.out.println("块 A");
 	}
 	static{
-		System.out.println("static");
+		System.out.println("static A");
 	}
 	A(int i){
 		System.out.println("a");

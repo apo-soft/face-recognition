@@ -1,6 +1,8 @@
 package org.yitu.recognition.util;
 
 import java.net.URLEncoder;
+
+import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -23,8 +25,6 @@ public class HttpRequestUtil {
 
 	private static final String APPLICATION_JSON = "application/json";
 	private static final String CONTENT_TYPE_TEXT_JSON = "text/json";
-	private static final String ISO_8859_1 = "ISO-8859-1";
-	private static final String UTF_8 = "utf-8";
 
 	/**
 	 * httpclient发送post请求
@@ -39,7 +39,7 @@ public class HttpRequestUtil {
 	 */
 	public static String httpPostWithJSON(String json, YituConfig config, String url) throws Exception {
 		// 将JSON进行UTF-8编码,以便传输中文
-		String encoderJson = URLEncoder.encode(json, HTTP.UTF_8);
+		String encoderJson = URLEncoder.encode(json, Consts.UTF_8.toString());
 
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		;
@@ -54,8 +54,8 @@ public class HttpRequestUtil {
 		httpPost.setEntity(se);
 		CloseableHttpResponse response = httpClient.execute(httpPost);
 		HttpEntity entity = response.getEntity();
-		String out = EntityUtils.toString(entity);
-		return new String(out.getBytes(ISO_8859_1), UTF_8);
+		return EntityUtils.toString(entity, Consts.UTF_8.toString());
+
 	}
 
 }
