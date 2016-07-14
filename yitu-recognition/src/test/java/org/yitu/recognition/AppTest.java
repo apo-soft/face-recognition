@@ -179,8 +179,8 @@ public class AppTest {
 		// String idCard = "/Users/yujinshui/Downloads/11.jpg";//
 		String idCard2 = "/Users/yujinshui/Desktop/img/card_2.jpg";// 身份证反面照片
 
-		app.checkAndVerify(checkImg, dataImg, queryImg);
-		// app.idcardOcr(idCard);
+//		app.checkAndVerify(checkImg, dataImg, queryImg);
+		 app.idcardOcr(idCard);
 	}
 
 }

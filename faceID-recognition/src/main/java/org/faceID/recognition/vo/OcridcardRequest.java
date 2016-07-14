@@ -1,15 +1,12 @@
 package org.faceID.recognition.vo;
 
-import java.io.File;
-
 /**
  * 身份证识别请求
  * 
  * @author yujinshui
  * @createTime 2016年7月13日 下午11:31:35
  */
-public class OcridcardRequest {
-	private File image;
+public class OcridcardRequest extends DetectRequest {
 	private String legality;
 
 	/**
@@ -19,9 +16,9 @@ public class OcridcardRequest {
 	 * @Author yujinshui
 	 * @createTime 2016年7月13日 下午11:38:22
 	 */
-	public File getImage() {
-		return image;
-	}
+	// public File getImage() {
+	// return image;
+	// }
 
 	/**
 	 * 一个图片，二进制文件，需要用post multipart/form-data的方式上传。
@@ -30,9 +27,9 @@ public class OcridcardRequest {
 	 * @Author yujinshui
 	 * @createTime 2016年7月13日 下午11:38:27
 	 */
-	public void setImage(File image) {
-		this.image = image;
-	}
+	// public void setImage(File image) {
+	// this.image = image;
+	// }
 
 	/**
 	 * 返回身份证照片合法性检查结果，值只取“0”或“1”。“1”：返回； “0”：不返回。默认“0”。
