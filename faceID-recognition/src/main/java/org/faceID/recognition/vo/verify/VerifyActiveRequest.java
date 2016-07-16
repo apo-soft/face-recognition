@@ -8,7 +8,7 @@ import java.io.File;
  * @author yujinshui
  * @createTime 2016年7月15日 下午11:37:02
  */
-public class VerifyActiveRequest {
+public class VerifyActiveRequest extends VerifyBaseRequest {
 	private String idcard_name;
 	private String idcard_number;
 	private File[] image_ref;

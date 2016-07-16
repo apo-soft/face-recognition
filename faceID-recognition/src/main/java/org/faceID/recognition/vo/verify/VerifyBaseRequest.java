@@ -1,7 +1,5 @@
 package org.faceID.recognition.vo.verify;
 
-import java.io.File;
-
 /**
  * 人脸核对基础bean
  * 

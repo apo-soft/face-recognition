@@ -17,7 +17,7 @@ import org.faceID.recognition.vo.OcridcardResponse;
 public class AppFaceTest {
 	String fileName = "/company/properties/faceID.properties";
 	FaceConfig config = new FaceIDPropertiesConfig(fileName, "UTF-8");
-	FaceHttpClient client = new FaceHttpClientRequest(config);
+	FaceHttpClient client = new FaceHttpClientRequest(config, "detect");
 
 	private void detect() {
 		DetectRequest request = getDetectContent();

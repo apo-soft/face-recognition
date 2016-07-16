@@ -8,7 +8,7 @@ import java.io.File;
  * @author yujinshui
  * @createTime 2016年7月15日 下午11:40:28
  */
-public class VerifyPassiveRequest {
+public class VerifyPassiveRequest extends VerifyBaseRequest {
 	private String uuid;
 	private File[] image_ref;
 
