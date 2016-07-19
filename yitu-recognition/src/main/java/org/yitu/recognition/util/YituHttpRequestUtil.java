@@ -17,10 +17,10 @@ import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
 @SuppressWarnings({ "unused", "deprecation" })
-public class HttpRequestUtil {
-	private static final Logger logger = Logger.getLogger(HttpRequestUtil.class);
+public class YituHttpRequestUtil {
+	private static final Logger logger = Logger.getLogger(YituHttpRequestUtil.class);
 
-	private HttpRequestUtil() {
+	private YituHttpRequestUtil() {
 	}
 
 	private static final String APPLICATION_JSON = "application/json";

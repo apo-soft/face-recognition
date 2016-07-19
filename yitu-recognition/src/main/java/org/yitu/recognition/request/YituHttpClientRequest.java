@@ -1,7 +1,7 @@
 package org.yitu.recognition.request;
 
 import org.apache.log4j.Logger;
-import org.yitu.recognition.util.HttpRequestUtil;
+import org.yitu.recognition.util.YituHttpRequestUtil;
 import org.yitu.recognition.util.YituConfig;
 import org.yitu.recognition.vo.FaceFeatureRequest;
 import org.yitu.recognition.vo.FaceFeatureResponse;
@@ -18,13 +18,13 @@ import com.alibaba.fastjson.JSON;
  * @author yujinshui
  * @createTime 2016年7月1日 下午4:33:58
  */
-public class HttpClientRequest implements HttpClient {
-	private static final Logger logger = Logger.getLogger(HttpClientRequest.class);
+public class YituHttpClientRequest implements YituHttpClient {
+	private static final Logger logger = Logger.getLogger(YituHttpClientRequest.class);
 	private YituConfig config;
 	private boolean verifyFlag = false;// 特征比对-测试用
 	private boolean featureFlag = false;// 特征抽取-测试用
 
-	public HttpClientRequest(YituConfig config) {
+	public YituHttpClientRequest(YituConfig config) {
 		this.config = config;
 	}
 
@@ -37,7 +37,7 @@ public class HttpClientRequest implements HttpClient {
 	 * @param verifyFlag
 	 *            特征比对【true：私有云，false：公有云。默认false】
 	 */
-	public HttpClientRequest(YituConfig config, boolean featureFlag, boolean verifyFlag) {
+	public YituHttpClientRequest(YituConfig config, boolean featureFlag, boolean verifyFlag) {
 		this.config = config;
 		this.featureFlag = featureFlag;
 		this.verifyFlag = verifyFlag;
@@ -45,7 +45,7 @@ public class HttpClientRequest implements HttpClient {
 
 	/**
 	 * 
-	 * @see org.yitu.recognition.request.HttpClient#execute(org.yitu.recognition.vo.FaceFeatureRequest)
+	 * @see org.yitu.recognition.request.YituHttpClient#execute(org.yitu.recognition.vo.FaceFeatureRequest)
 	 */
 	@Override
 	public FaceFeatureResponse execute(FaceFeatureRequest face) {
@@ -66,7 +66,7 @@ public class HttpClientRequest implements HttpClient {
 
 	/**
 	 * 
-	 * @see org.yitu.recognition.request.HttpClient#compareExecute(org.yitu.recognition.vo.FaceQueryRequest,
+	 * @see org.yitu.recognition.request.YituHttpClient#compareExecute(org.yitu.recognition.vo.FaceQueryRequest,
 	 *      org.yitu.recognition.util.YituConfig)
 	 */
 	@Override
@@ -105,14 +105,14 @@ public class HttpClientRequest implements HttpClient {
 	 */
 	private <T> T execute(String json, YituConfig config, String url, Class<T> clazz) throws Exception {
 		T response = null;
-		String res = HttpRequestUtil.httpPostWithJSON(json, config, url);
+		String res = YituHttpRequestUtil.httpPostWithJSON(json, config, url);
 		response = JSON.parseObject(res, clazz);
 		return response;
 	}
 
 	/**
 	 * 
-	 * @see org.yitu.recognition.request.HttpClient#recognizeIdcard(org.yitu.recognition.vo.IdcardRequest)
+	 * @see org.yitu.recognition.request.YituHttpClient#recognizeIdcard(org.yitu.recognition.vo.IdcardRequest)
 	 */
 	@Override
 	public IdcardResponse recognizeIdcard(IdcardRequest idCard) {

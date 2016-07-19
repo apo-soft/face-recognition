@@ -4,9 +4,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.UUID;
 
-import org.yitu.recognition.request.HttpClientRequest;
-import org.yitu.recognition.request.HttpClient;
-import org.yitu.recognition.util.Base64Util;
+import org.yitu.recognition.request.YituHttpClientRequest;
+import org.yitu.recognition.request.YituHttpClient;
+import org.yitu.recognition.util.YituBase64Util;
 import org.yitu.recognition.util.YituConfig;
 import org.yitu.recognition.util.YituPropertiesConfig;
 import org.yitu.recognition.vo.FaceFeatureRequest;
@@ -24,7 +24,7 @@ import org.yitu.recognition.vo.UserInfo;
 public class AppTest {
 	static String fileName = "/company/properties/face_yitu.properties";
 	static YituConfig config = new YituPropertiesConfig(fileName, "utf-8");
-	HttpClient client = new HttpClientRequest(config, false, false);
+	YituHttpClient client = new YituHttpClientRequest(config, false, false);
 
 	/** 特征抽取 */
 	public FaceFeatureResponse checkFace(YituConfig config, String img) {
@@ -56,7 +56,7 @@ public class AppTest {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		String output = Base64Util.getImgBase64Str(file);
+		String output = YituBase64Util.getImgBase64Str(file);
 		return output;
 	}
 
@@ -109,15 +109,17 @@ public class AppTest {
 			featureRes = checkFace(config, checkimg);
 		}
 		long b = System.currentTimeMillis();
-		// System.out.println(b - a);
-		FaceQueryResponse verify = verifyFace(config, featureRes, dataImg, queryImg);
-		System.out.println("特征返回：" + featureRes);
-		System.out.println("验证结果：" + verify);
-
-		if (verify.getRtn() == 0)
-			verifyPrint(verify);
-		else
-			System.out.println("rtn:" + verify.getRtn() + "  message:" + verify.getMessage());
+		System.out.println(featureRes);
+		// FaceQueryResponse verify = verifyFace(config, featureRes, dataImg,
+		// queryImg);
+		// System.out.println("特征返回：" + featureRes);
+		// System.out.println("验证结果：" + verify);
+		//
+		// if (verify.getRtn() == 0)
+		// verifyPrint(verify);
+		// else
+		// System.out.println("rtn:" + verify.getRtn() + " message:" +
+		// verify.getMessage());
 	}
 
 	/**
@@ -171,7 +173,7 @@ public class AppTest {
 
 	public static void main(String[] args) {
 		AppTest app = new AppTest();
-		String checkImg = "/Users/yujinshui/Desktop/img/he.jpg";// 特征抽取照
+		String checkImg = "/Users/yujinshui/Desktop/img/qqq.jpg";// 特征抽取照
 		String dataImg = "/Users/yujinshui/Desktop/img/he.jpg";// 已登记照
 		String queryImg = "/Users/yujinshui/Desktop/img/he.jpg";// 待确认照
 
@@ -179,8 +181,8 @@ public class AppTest {
 		// String idCard = "/Users/yujinshui/Downloads/11.jpg";//
 		String idCard2 = "/Users/yujinshui/Desktop/img/card_2.jpg";// 身份证反面照片
 
-//		app.checkAndVerify(checkImg, dataImg, queryImg);
-		 app.idcardOcr(idCard);
+		app.checkAndVerify(checkImg, dataImg, queryImg);
+		// app.idcardOcr(idCard);
 	}
 
 }

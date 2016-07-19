@@ -11,9 +11,9 @@ import java.util.UUID;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
-public class Base64Util {
+public class YituBase64Util {
 
-	private Base64Util() {
+	private YituBase64Util() {
 
 	}
 

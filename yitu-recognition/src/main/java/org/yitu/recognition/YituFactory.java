@@ -1,18 +1,18 @@
 package org.yitu.recognition;
 
-import org.yitu.recognition.request.HttpClient;
-import org.yitu.recognition.request.HttpClientRequest;
+import org.yitu.recognition.request.YituHttpClient;
+import org.yitu.recognition.request.YituHttpClientRequest;
 import org.yitu.recognition.util.YituConfig;
 import org.yitu.recognition.util.YituPropertiesConfig;
 
 public class YituFactory {
 	private static YituConfig config = new YituPropertiesConfig();
-	private static HttpClient client = new HttpClientRequest(config);
+	private static YituHttpClient client = new YituHttpClientRequest(config);
 
 	private YituFactory() {
 	}
 
-	public static HttpClient getFactory() {
+	public static YituHttpClient getFactory() {
 		return client;
 	}
 }

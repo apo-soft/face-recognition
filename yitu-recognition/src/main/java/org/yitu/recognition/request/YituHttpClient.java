@@ -7,7 +7,7 @@ import org.yitu.recognition.vo.FaceQueryResponse;
 import org.yitu.recognition.vo.IdcardRequest;
 import org.yitu.recognition.vo.IdcardResponse;
 
-public interface HttpClient {
+public interface YituHttpClient {
 	/**
 	 * 100.1身份证识别接口
 	 * 
