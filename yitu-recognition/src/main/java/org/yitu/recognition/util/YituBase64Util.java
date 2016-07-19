@@ -52,7 +52,7 @@ public class YituBase64Util {
 	 * @Author yujinshui
 	 * @createTime 2016年6月30日 下午7:24:35
 	 */
-	public static String getImgBase64Str(FileInputStream in) {
+	public static String getImgBase64Str(InputStream in) {
 		byte[] data = null;
 		try {
 			data = new byte[in.available()];
