@@ -35,7 +35,7 @@ public class FaceHttpClientRequest implements FaceHttpClient {
 
 	@Deprecated
 	public FaceHttpClientRequest(FaceConfig config) {
-		init();
+		init(config);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class FaceHttpClientRequest implements FaceHttpClient {
 	 *            [detect:检测接口，ocrid:身份识别接口，verify:身份比对接口]
 	 */
 	public FaceHttpClientRequest(FaceConfig config, String urlName) {
-		init();
+		init(config);
 		if ("detect".equals(urlName)) {
 			httppost = new HttpPost(config.getDETECT_URL());
 		} else if ("ocrid".equals(urlName)) {
@@ -57,7 +57,7 @@ public class FaceHttpClientRequest implements FaceHttpClient {
 		}
 	}
 
-	private void init() {
+	private void init(FaceConfig config) {
 		this.config = config;
 		httpClient = HttpClients.createDefault();
 		builder.addTextBody("api_key", config.getAPI_KEY());

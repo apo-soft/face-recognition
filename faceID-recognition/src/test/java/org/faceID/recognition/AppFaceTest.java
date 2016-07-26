@@ -10,6 +10,7 @@ import org.faceID.recognition.vo.DetectRequest;
 import org.faceID.recognition.vo.DetectResponse;
 import org.faceID.recognition.vo.OcridcardRequest;
 import org.faceID.recognition.vo.OcridcardResponse;
+import org.junit.Test;
 
 /**
  * Unit test for simple App.
@@ -19,13 +20,15 @@ public class AppFaceTest {
 	FaceConfig config = new FaceIDPropertiesConfig(fileName, "UTF-8");
 	FaceHttpClient client = new FaceHttpClientRequest(config, "detect");
 
-	private void detect() {
+	@Test
+	public void detect() {
 		DetectRequest request = getDetectContent();
 		DetectResponse res = client.execute(request);
 		System.out.println(res);
 	}
 
-	private void ocrIdcard() {
+	@Test
+	public void ocrIdcard() {
 		OcridcardRequest request = getOcrRequest();
 		OcridcardResponse response = client.execute(request);
 		System.out.println(response);
@@ -45,10 +48,10 @@ public class AppFaceTest {
 		return detect;
 	}
 
-	public static void main(String[] args) {
-		AppFaceTest app = new AppFaceTest();
-		// app.detect();
-		app.ocrIdcard();
-	}
+	// public static void main(String[] args) {
+	// AppFaceTest app = new AppFaceTest();
+	// // app.detect();
+	// app.ocrIdcard();
+	// }
 
 }
