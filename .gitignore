@@ -1,6 +1,5 @@
 *.class
 yitu-recognition/target
-yitu-recognition/target/classes
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 

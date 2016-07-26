@@ -36,7 +36,7 @@ public class AppTest {
 	/** 特征抽取-赋值 */
 	private FaceFeatureRequest getContent(String img) {
 		String output = getBase64Img(img);
-
+		System.out.println("base64编码："+output);
 		FaceFeatureRequest face = new FaceFeatureRequest();
 		face.setImage_content(output);
 		face.setImage_type(2);
@@ -110,16 +110,16 @@ public class AppTest {
 		}
 		long b = System.currentTimeMillis();
 		System.out.println(featureRes);
-		// FaceQueryResponse verify = verifyFace(config, featureRes, dataImg,
-		// queryImg);
-		// System.out.println("特征返回：" + featureRes);
-		// System.out.println("验证结果：" + verify);
-		//
-		// if (verify.getRtn() == 0)
-		// verifyPrint(verify);
-		// else
-		// System.out.println("rtn:" + verify.getRtn() + " message:" +
-		// verify.getMessage());
+		 FaceQueryResponse verify = verifyFace(config, featureRes, dataImg,
+		 queryImg);
+		 System.out.println("特征返回：" + featureRes);
+		 System.out.println("验证结果：" + verify);
+		
+		 if (verify.getRtn() == 0)
+		 verifyPrint(verify);
+		 else
+		 System.out.println("rtn:" + verify.getRtn() + " message:" +
+		 verify.getMessage());
 	}
 
 	/**
@@ -173,7 +173,7 @@ public class AppTest {
 
 	public static void main(String[] args) {
 		AppTest app = new AppTest();
-		String checkImg = "/Users/yujinshui/Desktop/img/qqq.jpg";// 特征抽取照
+		String checkImg = "/Users/yujinshui/Desktop/img/a.jpg";// 特征抽取照
 		String dataImg = "/Users/yujinshui/Desktop/img/he.jpg";// 已登记照
 		String queryImg = "/Users/yujinshui/Desktop/img/he.jpg";// 待确认照
 
@@ -181,7 +181,14 @@ public class AppTest {
 		// String idCard = "/Users/yujinshui/Downloads/11.jpg";//
 		String idCard2 = "/Users/yujinshui/Desktop/img/card_2.jpg";// 身份证反面照片
 
-		app.checkAndVerify(checkImg, dataImg, queryImg);
+		FaceFeatureResponse featureRes = null;
+		long a = System.currentTimeMillis();
+		if (true) {// 判断仅供测试
+			featureRes = app.checkFace(config, checkImg);
+		}
+		long b = System.currentTimeMillis();
+		System.out.println(featureRes);
+//		app.checkAndVerify(checkImg, dataImg, queryImg);
 		// app.idcardOcr(idCard);
 	}
 
