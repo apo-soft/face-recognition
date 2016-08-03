@@ -6,8 +6,21 @@ import org.yitu.recognition.vo.FaceQueryRequest;
 import org.yitu.recognition.vo.FaceQueryResponse;
 import org.yitu.recognition.vo.IdcardRequest;
 import org.yitu.recognition.vo.IdcardResponse;
+import org.yitu.recognition.vo.ImgPackageRequest;
+import org.yitu.recognition.vo.ImgPackageResponse;
 
 public interface YituHttpClient {
+	/**
+	 * 101.3 sdk图片解析接口<br>
+	 * 将sdk得到的图片数据包解析为可见图片
+	 * 
+	 * @param request
+	 * @return
+	 * @Author yujinshui
+	 * @createTime 2016年8月2日 下午5:52:46
+	 */
+	ImgPackageResponse checkImgPackage(ImgPackageRequest request);
+
 	/**
 	 * 100.1身份证识别接口
 	 * 

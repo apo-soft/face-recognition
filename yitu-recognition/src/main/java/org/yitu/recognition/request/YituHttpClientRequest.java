@@ -9,6 +9,8 @@ import org.yitu.recognition.vo.FaceQueryRequest;
 import org.yitu.recognition.vo.FaceQueryResponse;
 import org.yitu.recognition.vo.IdcardRequest;
 import org.yitu.recognition.vo.IdcardResponse;
+import org.yitu.recognition.vo.ImgPackageRequest;
+import org.yitu.recognition.vo.ImgPackageResponse;
 
 import com.alibaba.fastjson.JSON;
 
@@ -44,6 +46,26 @@ public class YituHttpClientRequest implements YituHttpClient {
 	}
 
 	/**
+	 * 配置信息验证接口
+	 * 
+	 * @param config
+	 * @Author yujinshui
+	 * @createTime 2016年7月12日 上午11:34:06
+	 */
+	private final void checkConfig(YituConfig config) {
+		if (config == null) {
+			throw new IllegalArgumentException("配置信息不能为NULL");
+		}
+		if (config.getACCESS_ID() == null || config.getACCESS_ID().isEmpty()) {
+			throw new IllegalArgumentException("ID配置信息不能为空");
+
+		}
+		if (config.getACCESS_KEY() == null || config.getACCESS_KEY().isEmpty()) {
+			throw new IllegalArgumentException("ACCESS_KEY配置信息不能为空");
+		}
+	}
+
+	/**
 	 * 
 	 * @see org.yitu.recognition.request.YituHttpClient#execute(org.yitu.recognition.vo.FaceFeatureRequest)
 	 */
@@ -60,6 +82,7 @@ public class YituHttpClientRequest implements YituHttpClient {
 			response = this.execute(JSON.toJSONString(face), config, url, FaceFeatureResponse.class);
 		} catch (Exception e) {
 			logger.error("特征抽取失败 - Get FaceFeatureResponse is wrong.", e);
+			System.out.println("特征抽取失败 - Get FaceFeatureResponse is wrong.");
 		}
 		return response;
 	}
@@ -81,6 +104,7 @@ public class YituHttpClientRequest implements YituHttpClient {
 			response = execute(JSON.toJSONString(face), config, pair_url, FaceQueryResponse.class);
 		} catch (Exception e) {
 			logger.error("特征对比失败 - Get FaceQueryResponse is wrong.", e);
+			System.out.println("特征对比失败 - Get FaceQueryResponse is wrong.");
 		}
 
 		return response;
@@ -123,28 +147,27 @@ public class YituHttpClientRequest implements YituHttpClient {
 					IdcardResponse.class);
 		} catch (Exception e) {
 			logger.error("100.1接口身份证识别异常 - Get IdcardResponse is wrong.", e);
+			System.out.println("100.1接口身份证识别异常 - Get IdcardResponse is wrong.");
 		}
 		return response;
 	}
 
 	/**
-	 * 配置信息验证接口
 	 * 
-	 * @param config
-	 * @Author yujinshui
-	 * @createTime 2016年7月12日 上午11:34:06
+	 * @see org.yitu.recognition.request.YituHttpClient#transImgPackage(org.yitu.recognition.vo.ImgPackageRequest)
 	 */
-	private final void checkConfig(YituConfig config) {
-		if (config == null) {
-			throw new IllegalArgumentException("配置信息不能为NULL");
+	@Override
+	public ImgPackageResponse checkImgPackage(ImgPackageRequest request) {
+		checkConfig(config);
+		ImgPackageResponse response = null;
+		try {
+			response = this.execute(JSON.toJSONString(request), config, config.getYITU_CHECK_IMAGE_PACKAGE_URL(),
+					ImgPackageResponse.class);
+		} catch (Exception e) {
+			logger.error("101.3sdk图片解析异常 - Get ImgPackageResponse is wrong.", e);
+			System.out.println("101.3sdk图片解析异常 - Get ImgPackageResponse is wrong.");
 		}
-		if (config.getACCESS_ID() == null || config.getACCESS_ID().isEmpty()) {
-			throw new IllegalArgumentException("ID配置信息不能为空");
-
-		}
-		if (config.getACCESS_KEY() == null || config.getACCESS_KEY().isEmpty()) {
-			throw new IllegalArgumentException("ACCESS_KEY配置信息不能为空");
-		}
+		return response;
 	}
 
 }

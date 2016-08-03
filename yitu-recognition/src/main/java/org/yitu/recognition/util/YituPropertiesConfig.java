@@ -21,6 +21,7 @@ public class YituPropertiesConfig implements YituConfig {
 	private String LOCAL_PAIR_URL;
 	private String YITU_IDCARD_URL;
 	private String YITU_IDCARD_OCR_URL;
+	private String YITU_CHECK_IMAGE_PACKAGE_URL;
 
 	private String ACCESS_ID;// header部分accessID(x-access-id)
 	private String ACCESS_KEY;// header部分key(x-signature)
@@ -102,6 +103,7 @@ public class YituPropertiesConfig implements YituConfig {
 		YITU_IDCARD_OCR_URL = p.getProperty("YITU_IDCARD_OCR_URL");
 		ACCESS_ID = p.getProperty("ACCESS_ID");
 		ACCESS_KEY = p.getProperty("ACCESS_KEY");
+		YITU_CHECK_IMAGE_PACKAGE_URL = p.getProperty("YITU_CHECK_IMAGE_PACKAGE_URL");
 
 	}
 
@@ -143,5 +145,10 @@ public class YituPropertiesConfig implements YituConfig {
 	@Override
 	public String getYITU_IDCARD_OCR_URL() {
 		return YITU_IDCARD_OCR_URL;
+	}
+
+	@Override
+	public String getYITU_CHECK_IMAGE_PACKAGE_URL() {
+		return YITU_CHECK_IMAGE_PACKAGE_URL;
 	}
 }

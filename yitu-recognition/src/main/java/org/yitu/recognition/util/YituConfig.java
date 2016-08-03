@@ -1,6 +1,9 @@
 package org.yitu.recognition.util;
 
 public interface YituConfig {
+	/** 101.3 接口，手机SDK捕获图片数据包接口 */
+	String getYITU_CHECK_IMAGE_PACKAGE_URL();
+
 	/** 105.1接口，通用身份证识别URL */
 	String getYITU_IDCARD_OCR_URL();
 
