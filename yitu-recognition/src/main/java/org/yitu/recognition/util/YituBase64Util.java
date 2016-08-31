@@ -44,6 +44,19 @@ public class YituBase64Util {
 	}
 
 	/**
+	 * 将字符串转化为base64加密串
+	 * 
+	 * @param str
+	 * @return
+	 * @Author yujinshui
+	 * @createTime 2016年8月14日 下午9:30:28
+	 */
+	public static String getStringBase64Str(String str) {
+		BASE64Encoder encoder = new BASE64Encoder();
+		return encoder.encode(str.getBytes()).replaceAll("\r|\n", "");
+	}
+
+	/**
 	 * 将图片转化为base64字符串
 	 * 
 	 * @param in
