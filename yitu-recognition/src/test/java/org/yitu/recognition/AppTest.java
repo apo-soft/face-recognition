@@ -267,7 +267,7 @@ public class AppTest {
 	}
 
 	private void handleFace() {
-		String name = "shui";
+		String name = "gang";
 		String picPath = "/Users/yujinshui/Desktop/人脸识别系统设计/face_pic/";
 		String img1 = picPath + name + ".jpg";
 		String img2 = picPath + name + "_1.jpg";
@@ -282,7 +282,7 @@ public class AppTest {
 		// System.out.println("网纹特征码：" + res1.getFeature());
 		Integer res = response.getPair_verify_result();
 		if (res != null)
-			System.out.println((response.getPair_verify_result() == 0 ? name + "同一人" : name + "不同人")
+			System.out.println((response.getPair_verify_result() == 0 ? name + " 同一人 " : name + " 不同人 ")
 					+ response.getPair_verify_similarity());
 		System.out.println(response);
 		System.out.println("Execute is ok.");
@@ -326,8 +326,8 @@ public class AppTest {
 
 	public static void main(String[] args) {
 		AppTest app = new AppTest();
-		app.checkFace();
-		// app.handleFace();
+//		app.checkFace();
+		 app.handleFace();
 		// app.getSdkPic();
 		// app.sdkAndCompare();
 	}
