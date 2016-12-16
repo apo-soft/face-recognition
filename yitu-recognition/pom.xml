@@ -18,10 +18,10 @@
 		<sonar.language>java</sonar.language>
 		<!-- <sonar.skip>true</sonar.skip> -->
 	</properties>
-	
+
 	<build>
 		<!--sonar plugins params management -->
-<!--		<pluginManagement>
+		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -29,8 +29,8 @@
 					<version>${sonar.version}</version>
 				</plugin>
 			</plugins>
-		</pluginManagement> 
---> <pluginManagement>
+		</pluginManagement>
+<!-- <pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.sonarsource.scanner.maven</groupId>
@@ -38,7 +38,7 @@
         <version>3.2</version>
       </plugin>
     </plugins>
-  </pluginManagement>
+  </pluginManagement> -->
 		<resources>
 			<resource>
 				<directory>src/main/java</directory>
@@ -49,13 +49,19 @@
 			</resource>
 		</resources>
 	</build>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.codehaus.sonar</groupId>
 			<artifactId>sonar-maven-plugin</artifactId>
 			<version>5.1</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.8</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>

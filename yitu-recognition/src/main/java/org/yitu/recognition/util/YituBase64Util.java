@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
-
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
 
 public class YituBase64Util {
 
@@ -38,10 +36,11 @@ public class YituBase64Util {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		BASE64Encoder encoder = new BASE64Encoder();
-
-		return encoder.encode(data).replaceAll("\r|\n", "");
+		return Base64.encodeBase64String(data);
+		
 	}
+	
+	
 
 	/**
 	 * 将字符串转化为base64加密串
@@ -52,10 +51,19 @@ public class YituBase64Util {
 	 * @createTime 2016年8月14日 下午9:30:28
 	 */
 	public static String getStringBase64Str(String str) {
-		BASE64Encoder encoder = new BASE64Encoder();
-		return encoder.encode(str.getBytes()).replaceAll("\r|\n", "");
+		return Base64.encodeBase64String(str.getBytes()).replaceAll("\r|\n", "");
 	}
-
+	public static String getStringBase64Str1(String str) {
+		return Base64.encodeBase64URLSafeString(str.getBytes()).replaceAll("\r|\n", "");
+	}
+	public static void main(String[] args) {
+		String ba1 = getStringBase64Str("hello/world");
+		String ba2 = getStringBase64Str1("hello/world");
+		System.out.println(ba1);
+		System.out.println(ba2);
+		System.out.println(ba1.equals(ba2));
+		
+	}
 	/**
 	 * 将图片转化为base64字符串
 	 * 
@@ -74,8 +82,9 @@ public class YituBase64Util {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		BASE64Encoder encoder = new BASE64Encoder();
-		return encoder.encode(data).replaceAll("\r|\n", "");
+//		BASE64Encoder encoder = new BASE64Encoder();
+//		return encoder.encode(data).replaceAll("\r|\n", "");
+		return Base64.encodeBase64URLSafeString(data).replaceAll("\r|\n", "");
 	}
 
 	/**
@@ -91,19 +100,20 @@ public class YituBase64Util {
 		if (imgStr == null) {
 			return null;
 		}
-		BASE64Decoder decoder = new BASE64Decoder();
+//		BASE64Decoder decoder = new BASE64Decoder();
 
 		byte[] b = null;
-		try {
-			b = decoder.decodeBuffer(imgStr);
+//		try {
+//			b = decoder.decodeBuffer(imgStr);
+			b = Base64.decodeBase64(imgStr);
 			for (int i = 0; i < b.length; i++) {
 				if (b[i] < 0) {// 调整异常数据
 					b[i] += 256;
 				}
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		return b;
 	}
 
