@@ -11,34 +11,8 @@
 	<artifactId>yitu-recognition</artifactId>
 	<name>yitu-recognition</name>
 	<url>http://maven.apache.org</url>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!--sonar plugins params management -->
-		<sonar.version>2.5</sonar.version>
-		<sonar.language>java</sonar.language>
-		<!-- <sonar.skip>true</sonar.skip> -->
-	</properties>
 
 	<build>
-		<!--sonar plugins params management -->
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>sonar-maven-plugin</artifactId>
-					<version>${sonar.version}</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-<!-- <pluginManagement>
-    <plugins>
-      <plugin>
-        <groupId>org.sonarsource.scanner.maven</groupId>
-        <artifactId>sonar-maven-plugin</artifactId>
-        <version>3.2</version>
-      </plugin>
-    </plugins>
-  </pluginManagement> -->
 		<resources>
 			<resource>
 				<directory>src/main/java</directory>
@@ -51,11 +25,11 @@
 	</build>
 
 	<dependencies>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.codehaus.sonar</groupId>
 			<artifactId>sonar-maven-plugin</artifactId>
 			<version>5.1</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>

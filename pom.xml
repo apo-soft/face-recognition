@@ -10,6 +10,27 @@
 		<module>yitu-recognition</module>
 		<module>faceID-recognition</module>
 	</modules>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!--sonar plugins params management -->
+		<sonar.version>2.5</sonar.version>
+		<sonar.language>java</sonar.language>
+		<!-- <sonar.skip>true</sonar.skip> -->
+	</properties>
+	<build>
+		<!--sonar plugins params management -->
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>${sonar.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+	</build>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
