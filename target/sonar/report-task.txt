@@ -1,5 +1,0 @@
-projectKey=org.face.identify:face-recognition
-serverUrl=http://localhost:9000
-dashboardUrl=http://localhost:9000/dashboard/index/org.face.identify:face-recognition
-ceTaskId=AVkWUYK_rI3nOl37c8W2
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AVkWUYK_rI3nOl37c8W2
