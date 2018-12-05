@@ -9,6 +9,7 @@
     <modules>
         <module>yitu-recognition</module>
         <module>faceID-recognition</module>
+        <module>tencent-recognition</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
